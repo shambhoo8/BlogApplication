@@ -51,7 +51,7 @@ inHealthAssignmentApp.controller('PostDetailController', ['$http', '$scope', '$r
             var filtercriteria = new Object();
             filtercriteria.blogPostId = _BlogPostId;
 
-            PostCommentServices.get(filtercriteria, function (response) {
+            PostCommentServices.put(filtercriteria, function (response) {
                 $scope.CommentList = response.CommentList;
             });
         }

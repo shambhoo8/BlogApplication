@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace InHealth_Assignment.Web.Controllers.ApiControllers
 {
-    [AuthorizeAPI]
+    //[AuthorizeAPI]
     public class UserRegistrationController : ApiController
     {
         [Route("~/Api/UserRegistration/RegisterNewUserService")]

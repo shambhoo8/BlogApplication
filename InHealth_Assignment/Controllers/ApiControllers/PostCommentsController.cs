@@ -5,20 +5,20 @@ using System.Web.Http;
 
 namespace InHealth_Assignment.Web.Controllers.ApiControllers
 {
-    [AuthorizeAPI]
+    //[AuthorizeAPI]
     public class PostCommentsController : ApiController
     {
         [Route("~/Api/PostComments/SaveCommentService")]
         [HttpPost]
-        public ReturnResult SaveComment(BlogPostCommentsVM _blogPostCommentsVM)
+        public ReturnResult SaveComment([FromBody] BlogPostCommentsVM _blogPostCommentsVM)
         {
             BlogPostHelper _blogPostHelper = new BlogPostHelper();
             return _blogPostHelper.AddNewComment(_blogPostCommentsVM);
         }
 
         [Route("~/Api/PostComments/SaveCommentService")]
-        [HttpGet]
-        public PostCommentsVM GetCommentList(BlogPostCommentsVM _blogPostCommentsVM)
+        [HttpPut]
+        public PostCommentsVM GetCommentList([FromBody] BlogPostCommentsVM _blogPostCommentsVM)
         {
             BlogPostHelper _blogPostHelper = new BlogPostHelper();
             if(_blogPostCommentsVM!=null)

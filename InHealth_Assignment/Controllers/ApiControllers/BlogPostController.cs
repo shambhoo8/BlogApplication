@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace InHealth_Assignment.Web.Controllers.ApiControllers
 {
-    [AuthorizeAPI]
+    //[AuthorizeAPI]
     public class BlogPostController : ApiController
     {
         [Route("~/Api/BlogPost/GetBlogPostService")]
