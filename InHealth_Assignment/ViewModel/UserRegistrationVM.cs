@@ -13,7 +13,6 @@ namespace InHealth_Assignment.Web.ViewModel
         public string UserName { get; set; }
         public string EmailId { get; set; }
         public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
         public DateTime CreatedDate { get; set; }
         public int RoleId { get; set; }
         public string RoleName { get; set; }

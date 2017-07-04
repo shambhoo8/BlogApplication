@@ -14,11 +14,11 @@ namespace InHealth_Assignment.Web.Controllers.ApiControllers
     public class BlogPostUserController : ApiController
     {
         [Route("~/Api/BlogPostUser/GetPostByUserService")]
-        [HttpPost]
-        public BlogPostDetailsVM GetAllPostByUser(BlogPostSearchVM _blogPostSearchVM)
+        [HttpGet]
+        public BlogPostDetailsVM GetAllPostByUser()
         {
             BlogPostHelper _blogPostHelper = new BlogPostHelper();
-            return _blogPostHelper.GetAllPostByUser(_blogPostSearchVM);
+            return _blogPostHelper.GetAllPostByUser();
         }
     }
 }

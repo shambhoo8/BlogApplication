@@ -157,6 +157,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Authentication\MyIdentity.cs" />
+    <Compile Include="Authentication\MyPrincipal.cs" />
     <Compile Include="Controllers\ApiControllers\BlogPostAdminController.cs" />
     <Compile Include="Controllers\ApiControllers\BlogPostController.cs" />
     <Compile Include="Controllers\ApiControllers\BlogPostUserController.cs" />

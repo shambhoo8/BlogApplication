@@ -24,12 +24,7 @@ inHealthAssignmentApp.controller('BlogPostUserController', ['$http', '$scope', '
             $('.tr-ng-grid tbody tr.blank_row').remove();
             var htmlToAppend = '<tbody><tr class=blank_row><td colspan=13>No Data found, please apply filters and try again.</td></tr></tbody>';
 
-            var searchCriteria = new Object();
-
-            searchCriteria.BlogPostVM = new Object();
-            searchCriteria.BlogPostVM.CreatedBy = sessionStorage.UserId;
-
-            BlogPostUserServices.post(searchCriteria, function (response) {
+            BlogPostUserServices.get(function (response) {
                 $scope.BlogPostTotalCount = response.TotalCount;
                 $scope.BlogPostList = response.BlogPostList;
 

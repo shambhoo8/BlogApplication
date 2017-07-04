@@ -4,6 +4,7 @@ using InHealth_Assignment.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace InHealth_Assignment.Web.Helpers
 {
@@ -76,13 +77,14 @@ namespace InHealth_Assignment.Web.Helpers
 
             return _blogPostDetailsVM;
         }
-        public BlogPostDetailsVM GetAllPostByUser(BlogPostSearchVM _blogPostSearchVM)
+        public BlogPostDetailsVM GetAllPostByUser()
         {
             BlogPostDetailsVM _blogPostDetailsVM = new BlogPostDetailsVM();
-
+            var userId = HttpContext.Current.User.Identity.Name;
+            var _createdBy = _genericService.UserRegistration.GetAll().Where(x => x.emailId.Equals(userId)).FirstOrDefault().Id;
             IQueryable<BlogPostVM> _blogPostVMList;
            
-            _blogPostVMList = _genericService.BlogPost.GetAll().Where(x => x.IsActive == true && (x.UserRegistration.IsActive==true && x.CreatedBy == _blogPostSearchVM.blogPostVM.CreatedBy)).
+            _blogPostVMList = _genericService.BlogPost.GetAll().Where(x => x.IsActive == true && (x.UserRegistration.IsActive==true && x.CreatedBy == _createdBy)).
                             Select(x => new BlogPostVM
                             {
                                 blogPostId = x.Id,

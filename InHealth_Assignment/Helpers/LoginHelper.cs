@@ -1,9 +1,12 @@
 ﻿using InHealth_Assignment.Business;
+using InHealth_Assignment.Model.Entities;
 using InHealth_Assignment.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using System.Web.Security;
 
 namespace InHealth_Assignment.Web.Helpers
@@ -27,11 +30,25 @@ namespace InHealth_Assignment.Web.Helpers
             var loginData = _genericService.UserRegistration.GetAll().Where(x => (x.IsActive == true && x.emailId == _loginVM.UserName));
             if(loginData.Any())
             {
-                var hasPwd = loginData.FirstOrDefault().password;
+                UserRegistration user = loginData.FirstOrDefault();
+
+                var hasPwd = user.password;
 
                 if(Utilities.utility.ValidatePassword(_loginVM.Password, hasPwd))
                 {
-                    if (loginData.FirstOrDefault().UserRole.RoleName.ToLower() == "admin")
+                    if (user != null)
+                    {
+                        JavaScriptSerializer js = new JavaScriptSerializer();
+                        string data = js.Serialize(user);
+                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.emailId, DateTime.Now, DateTime.Now.AddMinutes(30),true, data);
+                        string encToken = FormsAuthentication.Encrypt(ticket);
+                        HttpCookie authoCookies = new HttpCookie(FormsAuthentication.FormsCookieName, encToken);
+                        HttpContext.Current.Response.Cookies.Add(authoCookies);
+                        //HttpContext.Response.Cookies.Add(authoCookies);
+                        //Response.Cookies.Add(authoCookies);
+                    }
+
+                    if (user.UserRole.RoleName.ToLower() == "admin")
                     {
                         _loginVM.RedirectURL = "/BlogPostList";
                     }
@@ -40,10 +57,10 @@ namespace InHealth_Assignment.Web.Helpers
                         _loginVM.RedirectURL = "/BlogPostUser";
                     }
 
-                    FormsAuthentication.SetAuthCookie(_loginVM.UserName, true);
+                   // FormsAuthentication.SetAuthCookie(_loginVM.UserName, true);
                     _loginVM.Success = true;
                     _loginVM.Message = "Login successful!!!";
-                    _loginVM.UserId = loginData.FirstOrDefault().Id;
+                    _loginVM.UserId = user.Id;
                 }
                 else
                 {
