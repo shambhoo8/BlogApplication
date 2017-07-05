@@ -159,6 +159,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authentication\MyIdentity.cs" />
     <Compile Include="Authentication\MyPrincipal.cs" />
+    <Compile Include="Authorization\CustomAuthorizeAttribute.cs" />
     <Compile Include="Controllers\ApiControllers\BlogPostAdminController.cs" />
     <Compile Include="Controllers\ApiControllers\BlogPostController.cs" />
     <Compile Include="Controllers\ApiControllers\BlogPostUserController.cs" />
@@ -309,6 +310,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\_PartialBlogPostList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\AccessDeniedUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\AccessDeniedAdmin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\AccessDenied.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

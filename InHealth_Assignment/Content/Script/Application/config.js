@@ -42,11 +42,14 @@ inHealthAssignmentApp.config(['$routeProvider', function ($routeProvider) {
     .when('/UserList', {
         templateUrl: '../Home/UserList',
         controller: 'UserListController'
-    })
+        })
+        .when('/LogOut', {
+            templateUrl: '../Home/LogOut',
+            controller: 'LoginController'
+        })
 
     $routeProvider.otherwise({ redirectTo: '/Login' });
 }]);
-
 
 inHealthAssignmentApp.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('httpRequestInterceptor');

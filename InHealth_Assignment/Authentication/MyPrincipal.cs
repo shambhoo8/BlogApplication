@@ -18,6 +18,8 @@ namespace InHealth_Assignment.Web.Authentication
         public bool IsInRole(string role)
         {
             return Roles.IsUserInRole(role);
+
         }
+
     }
 }

@@ -24,7 +24,9 @@
                                 <table>
                                     <tr ng-repeat="CommentData in CommentList">
                                         <td class="text-justify">
-                                            {{CommentData.commentContent}}
+                                            <b> {{CommentData.commentContent}}</b>
+                                            <br />
+                                            {{CommentData.CommentDate|date:'dd-MMM-yyyy hh:mm'}}
                                             <br />
                                             <br />
                                         </td>
