@@ -23,6 +23,7 @@ namespace InHealth_Assignment.Web.ViewModel
         public long BlogPostId { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
+        public string RedirectURL { get; set; }
     }
 
     public class UserRegistrationListVM

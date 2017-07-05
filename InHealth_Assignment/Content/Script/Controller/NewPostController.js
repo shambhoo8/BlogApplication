@@ -11,12 +11,12 @@ inHealthAssignmentApp.controller('NewPostController', ['$http', '$scope', '$rout
 
         $scope.Submit = function () {
             $scope.dataLoading = true;
-            $scope.post.CreatedBy = sessionStorage.UserId;
+            //$scope.post.CreatedBy = sessionStorage.UserId;
             
             NewPostServices.post($scope.post, function (response) {
                 if (response.Success == true) {
                     toastr.success(response.Message);
-                    $location.path('/BlogPostUser');
+                    $location.path(response.RedirectURL);
                 }
                 else {
                     toastr.warning(response.Message);

@@ -59,10 +59,15 @@ namespace InHealth_Assignment.Controllers
         {
             return View("~/Views/Home/_PartialBlogPostUser.cshtml");
         }
-        [CustomAuthorize(Roles = "Admin,Standard User")]
+        [CustomAuthorize(Roles = "Standard User")]
         public ActionResult NewPost()
         {
             return View("~/Views/Home/_PartialNewPost.cshtml");
+        }
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult NewPostAdmin()
+        {
+            return View("~/Views/Home/_PartialNewPostAdmin.cshtml");
         }
         [CustomAuthorize(Roles = "Admin")]
         public ActionResult BlogPostList()
@@ -101,7 +106,7 @@ namespace InHealth_Assignment.Controllers
         }
         public ActionResult LogOut()
         {
-            FormsAuthentication.SignOut();
+            DefaultSignOut();
 
             return View("~/Views/Home/_PartialLogin.cshtml");
         }
@@ -109,6 +114,12 @@ namespace InHealth_Assignment.Controllers
         public void DefaultSignOut()
         {
             FormsAuthentication.SignOut();
+            Session.Abandon();
+
+            // clear authentication cookie
+            HttpCookie authoCookies = new HttpCookie(FormsAuthentication.FormsCookieName, "");
+            authoCookies.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(authoCookies);
         }
     }
 }

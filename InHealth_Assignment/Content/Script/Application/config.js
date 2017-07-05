@@ -32,7 +32,11 @@ inHealthAssignmentApp.config(['$routeProvider', function ($routeProvider) {
     .when('/NewPost', {
         templateUrl: '../Home/NewPost',
         controller: 'NewPostController'
-    })
+        })
+    .when('/NewPostAdmin', {
+            templateUrl: '../Home/NewPostAdmin',
+            controller: 'NewPostController'
+        })
 
     .when('/PostDetail', {
         templateUrl: '../Home/PostDetail',

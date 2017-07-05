@@ -44,8 +44,6 @@ namespace InHealth_Assignment.Web.Helpers
                         string encToken = FormsAuthentication.Encrypt(ticket);
                         HttpCookie authoCookies = new HttpCookie(FormsAuthentication.FormsCookieName, encToken);
                         HttpContext.Current.Response.Cookies.Add(authoCookies);
-                        //HttpContext.Response.Cookies.Add(authoCookies);
-                        //Response.Cookies.Add(authoCookies);
                     }
 
                     if (user.UserRole.RoleName.ToLower() == "admin")

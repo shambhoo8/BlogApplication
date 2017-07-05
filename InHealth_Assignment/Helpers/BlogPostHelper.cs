@@ -27,8 +27,9 @@ namespace InHealth_Assignment.Web.Helpers
             ReturnResult returnResult = new ReturnResult();
             try
             {
+                var userData = _genericService.UserRegistration.GetAll().Where(x => x.emailId.Equals(HttpContext.Current.User.Identity.Name)).FirstOrDefault();
                 BlogPost _newBlogPost = new BlogPost();
-                _newBlogPost.CreatedBy = blogPostVM.CreatedBy;
+                _newBlogPost.CreatedBy = userData.Id;
                 _newBlogPost.Title = blogPostVM.Title;
                 _newBlogPost.PostContent = blogPostVM.PostContent;
                 _newBlogPost.CreatedDate = DateTime.Now;
@@ -44,6 +45,11 @@ namespace InHealth_Assignment.Web.Helpers
                 }
                 else
                 {
+                    if(userData.UserRole.RoleName.Equals("Admin"))
+                        returnResult.RedirectURL = "/BlogPostList";
+                   else
+                        returnResult.RedirectURL = "/BlogPostUser";
+
                     returnResult.Success = true;
                     returnResult.Message = "Data saved successfully!!!";
                     returnResult.BlogPostId = _newBlogPost.Id;
@@ -80,23 +86,28 @@ namespace InHealth_Assignment.Web.Helpers
         public BlogPostDetailsVM GetAllPostByUser()
         {
             BlogPostDetailsVM _blogPostDetailsVM = new BlogPostDetailsVM();
-            var userId = HttpContext.Current.User.Identity.Name;
-            var _createdBy = _genericService.UserRegistration.GetAll().Where(x => x.emailId.Equals(userId)).FirstOrDefault().Id;
-            IQueryable<BlogPostVM> _blogPostVMList;
-           
-            _blogPostVMList = _genericService.BlogPost.GetAll().Where(x => x.IsActive == true && (x.UserRegistration.IsActive==true && x.CreatedBy == _createdBy)).
-                            Select(x => new BlogPostVM
-                            {
-                                blogPostId = x.Id,
-                                Title = x.Title,
-                                PostContent = x.PostContent,
-                                CreatedBy = x.CreatedBy,
-                                CreatedDate = x.CreatedDate,
-                                Author = x.UserRegistration.fName + " " + x.UserRegistration.lName
-                            });
-          
-            _blogPostDetailsVM.BlogPostList = _blogPostVMList.ToList();
-            _blogPostDetailsVM.TotalCount = _blogPostVMList.Count();
+            try
+            { 
+                var userId = HttpContext.Current.User.Identity.Name;
+                var _createdBy = _genericService.UserRegistration.GetAll().Where(x => x.emailId.Equals(userId)).FirstOrDefault().Id;
+                IQueryable<BlogPostVM> _blogPostVMList;
+
+                _blogPostVMList = _genericService.BlogPost.GetAll().Where(x => x.IsActive == true && (x.UserRegistration.IsActive == true && x.CreatedBy == _createdBy)).
+                                Select(x => new BlogPostVM
+                                {
+                                    blogPostId = x.Id,
+                                    Title = x.Title,
+                                    PostContent = x.PostContent,
+                                    CreatedBy = x.CreatedBy,
+                                    CreatedDate = x.CreatedDate,
+                                    Author = x.UserRegistration.fName + " " + x.UserRegistration.lName
+                                });
+
+                _blogPostDetailsVM.BlogPostList = _blogPostVMList.ToList();
+                _blogPostDetailsVM.TotalCount = _blogPostVMList.Count();
+            }
+            catch(Exception ex)
+            { throw new Exception(ex.Message); }
 
             return _blogPostDetailsVM;
         }
